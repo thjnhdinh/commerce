@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+{% load humanize %}
+
+{% block body %}
+    {% block heading %} <h2>Active Listings</h2> {% endblock %}
+    {% for listing in lists %}
+        <a href="{% url 'listing_page' listing.id %}" class="index-listing">
+            <div class="listing-card">
+                <div class="listing-image">
+                    {% if listing.image_url %}
+                        <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
+                    {% endif %}
+                </div>
+                <div class="listing-details">
+                    <h5>{{ listing.title }}</h5>
+                    <p><strong>Price: </strong>${% if listing.bids.exists%}{{listing.bids.last.largest_bid|intcomma}}
+                                               {% else %}{{ listing.starting_bid|intcomma }}
+                                               {% endif %}
+                    </p>
+                    <p>{{ listing.description }}</p>
+                    <p class="date">Created {{ listing.create_at }}</p>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

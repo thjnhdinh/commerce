@@ -1,0 +1,115 @@
+body {
+    padding: 10px;
+}
+
+.form-group {
+    width: 30%;
+}
+
+input[name=title] {
+    width: 30%;
+}
+
+input[name=image_url] {
+    width: 500px;
+}
+
+input[name=category] {
+    width: 220px;
+}
+
+input[type=number] {
+    width: 115px;
+    margin-right: 10px;
+}
+
+textarea {
+    width: 100%;
+}
+
+div {
+    margin: 20px 0 20px;
+}
+
+label {
+    display: block;
+}
+
+.index-listing, .index-listing:hover {
+    text-decoration: none;
+    color: black;
+}
+.index-listing:hover h5, button:hover, .listing-details .date {
+    color: #999;
+}
+
+.listing-card {
+    display: flex;      /*use flexbox to put image and text side by side*/
+    border: 1px solid;
+    padding: 0 20px;
+}
+
+.listing-image {
+    width: 300px;
+    height: 300px;
+    flex-shrink: 0;     /*prevent shrinking*/
+    margin-right: 20px;
+}
+
+.listing-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.listing-details h5 {
+    font-size: 24px;
+}
+
+.listing-details p, .description, .starting_bid, input[name=new_bid] {
+    margin: 10px 10px 10px 0;
+}
+
+.listing-details .date {
+    font-size: 14px;
+}
+
+#listing_page-img {
+    display: block;
+    margin: 10px auto;
+    width: 50%;
+}
+
+.header-side-by-side {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-side-by-side, .error_message {
+    margin: 0;
+}
+
+button {
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 5px 12px;
+}
+
+.error_message, .close_button:hover {
+    color: red;
+}
+
+.open_button:hover {
+    color: green;
+}
+
+.notice_bid {
+    margin: 20px 0 0;
+    font-size: 15px;
+}
+
+h4 {
+    margin-top: 40px;
+}

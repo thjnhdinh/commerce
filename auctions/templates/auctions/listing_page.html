@@ -1,0 +1,82 @@
+{% extends "auctions/layout.html" %}
+{% load humanize %}
+
+{% block title %}
+    {{ listing.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="header-side-by-side">
+        <h2>Listing: {{ listing.title }}</h2>
+        {% if user == listing.owner %}
+            <form action="{% url 'close_listing' listing.id %}" method="post">
+                {% csrf_token %}
+                {% if listing.is_active == True %}
+                    <button type="submit" class="close_button">Close Auction</button>
+                {% else %}
+                    <button type="submit" class="open_button">Open Auction</button>
+                {% endif %}
+            </form>
+        {% endif %}
+    </div>
+
+    <form action="{% url 'watchlist_adjust' listing.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">
+            {% if user in listing.watcher.all %}Remove from
+            {% else %}Add to
+            {% endif %}Watchlist
+        </button>
+    </form>
+
+    <div>
+        {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" alt="{{ listing.title }} " id="listing_page-img">
+        {% endif %}
+    </div>
+
+    <h5 class="description">{{ listing.description }}</h5>
+    <h2 class="starting_bid">${{ current_bid|intcomma }}</h2>
+
+    <div class="notice_bid">{{ bid_message }}</div>
+
+    {% if user.is_authenticated and listing.is_active == True %}
+        {% if error_message %}
+            <p class="error_message">{{ error_message }}</p>
+        {% endif %}
+        <form action="{% url 'bid' listing.id %}" method="POST">
+            {% csrf_token %}
+            <input type="number" min="{{ current_bid }}" step="0.01" name="new_bid" placeholder="Bid">
+            <input type="submit" value="Place Bid">
+        </form>
+    {% endif %}
+
+    <div>
+    <h4>Details</h4>
+        <ul>
+            <li>Listed by: {{ listing.owner }}</li>
+            <li>Category: 
+                <a href="{% url 'category' listing.category %}">{{ listing.category }}</a>
+            </li>
+        </ul>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div>
+            <form action="{% url 'write_comments' listing.id %}" method="post">
+                {% csrf_token %}
+                <label>Write comments:</label>
+                <textarea name="comments" rows="5" placeholder="Say something about this item."></textarea>
+                <input type="submit" value="Post comment">
+            </form>
+        </div>
+    {% endif %}
+
+    <h4>Comments</h4>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.commenter }}: {{ comment.text }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
